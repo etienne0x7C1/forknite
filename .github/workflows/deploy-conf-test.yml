@@ -24,8 +24,8 @@ jobs:
       - run: cp -r /home/runner/work/forknite/forknite/ /home/runner/work/forknite/cra-pwa/src/modules/
       - name: checkout external modules
         env: 
-          GITLAB_USR: TOTO #${{ secrets.GITLAB_USER }}
-          GITLAB_PWD: AVELO #${{ secrets.GITLAB_TOKEN }}
+          GITLAB_USR: ${{ secrets.GITLAB_USER }}
+          GITLAB_PWD: ${{ secrets.GITLAB_TOKEN }}
         run: echo $GITLAB_USR && cd /home/runner/work/forknite/cra-pwa/src/modules/ && git clone https://$GITLAB_USR:$GITLAB_PWD@gitlab.com/three-modules/three-core-modules.git
       - run: ls -la
       - name: Deploy
