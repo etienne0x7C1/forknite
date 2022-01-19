@@ -18,6 +18,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
+          
+      - run: yarn create react-app three-app-launcher --template cra-template-pwa-typescript
+      - run: ls -la
+      - run: pwd
 
       - name: Cache dependencies
         uses: actions/cache@v2
