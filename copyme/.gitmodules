@@ -1,0 +1,9 @@
+[submodule "src/modules/three-experiments"]
+	path = src/modules/three-experiments
+	url = git@gitlab.com:three-modules/three-experiments
+[submodule "src/modules/three-core-modules"]
+	path = src/modules/three-core-modules
+	url = git@gitlab.com:three-modules/three-core-modules
+[submodule "src/modules/three-resources"]
+	path = src/modules/three-resources
+	url = git@gitlab.com:three-modules/three-resources
