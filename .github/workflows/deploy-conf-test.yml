@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '14'
           
-      - run: cd ..
+      - run: cd /home/runner/work/ && pwd
       - run: pwd
       - run: yarn create react-app three-app-launcher --template cra-template-pwa-typescript
       - run: ls -la
