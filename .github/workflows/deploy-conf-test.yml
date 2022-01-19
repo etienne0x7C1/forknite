@@ -26,12 +26,8 @@ jobs:
         env: 
           GITLAB_USR: ${{ secrets.GITLAB_USER }}
           GITLAB_PWD: ${{ secrets.GITLAB_TOKEN }}
-        run:
-          cd /home/runner/work/forknite/cra-pwa/src/modules/
-          git clone https://$GITLAB_USR:$GITLAB_PWD@gitlab.com/three-modules/three-core-modules.git
-          git clone https://$GITLAB_USR:$GITLAB_PWD@gitlab.com/three-modules/three-resources.git
-          pwd
-          ls -la
+        run: cd /home/runner/work/forknite/cra-pwa/src/modules/ && git clone https://$GITLAB_USR:$GITLAB_PWD@gitlab.com/three-modules/three-core-modules.git
+      - run: ls -la
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/main' }}
