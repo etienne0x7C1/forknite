@@ -23,6 +23,7 @@ jobs:
       - run: cp -r /home/runner/work/forknite/forknite/copyme/* /home/runner/work/forknite/cra-pwa/
       - run: cp -r /home/runner/work/forknite/forknite/ /home/runner/work/forknite/cra-pwa/src/modules/
       - run: cd /home/runner/work/forknite/cra-pwa/src/modules/ && git clone https://${{ secrets.GITLAB_USER }}:${{ secrets.GITLAB_TOKEN }}@gitlab.com/three-modules/three-core-modules.git
+      - run: cd /home/runner/work/forknite/cra-pwa/src/modules/ && git clone https://${{ secrets.GITLAB_USER }}:${{ secrets.GITLAB_TOKEN }}@gitlab.com/three-modules/three-resources.git
       - run: ls -la /home/runner/work/forknite/cra-pwa/src/modules/
 
       - name: Deploy
