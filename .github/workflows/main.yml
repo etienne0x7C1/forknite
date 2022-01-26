@@ -62,7 +62,7 @@ jobs:
           node $GITHUB_WORKSPACE/$SCRIPTS_DIR/gen_git_commands.mjs $GITHUB_WORKSPACE/$MODULES_INDEX_FILE | sed 's/GIT/\$GIT/g' | sh 
           pwd && ls -la
           cd ./three-experiments/ && git checkout voxels
-      - name: Complete modules index and Generate gitmodules config file 
+      - name: Complete modules index and Generate gitmodules config file + finishSetup script
         run: |
           # add remaining modules to the index
           echo "github.com/etienne1911/forknite.git" >> $MODULES_INDEX_FILE
@@ -79,7 +79,7 @@ jobs:
           JSON_PATCHER: "./src/modules/pwa-tools/scripts/json_cfg_patcher.mjs"
           TSCONF_PATCH: '{"compilerOptions":{"target":"es2015","strict":false}}'
           MANIFEST_PATCH: '{"short_name":"Forknite","name":"Forknite PWA Demo", "display": "fullscreen", "description":"Fortnite clone PWA version","start_url":"/ForkniteDemo", "orientation": "landscape" }'
-          PACKAGE_PATCH: '{"scripts":{"setup":"cd src/modules && node gen_git_commands.mjs modules_index | sh"}}'
+          PACKAGE_PATCH: '{"scripts":{"setup-finish":"cd src/modules && node gen_git_commands.mjs modules_index | sh"}}'
           VIEWPORT_LINE: '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />'
           TITLE_LINE: '<title>Forknite PWA</title>'
           HTML_PATCH_FILE: 'src/modules/pwa-tools/patches/gh-pages_spa-fix.patch'
@@ -131,8 +131,8 @@ jobs:
     - name: Download packages deps and checkout modules
       run: |
         yarn
+        yarn setup-finish
         cd src/modules
-        node gen_git_commands.mjs modules_index | sed 's/GIT/\$GIT/g' | sh 
         cd ./three-experiments/ && git checkout voxels
 
     - name: Build web app (include build information)
