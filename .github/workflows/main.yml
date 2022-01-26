@@ -79,12 +79,12 @@ jobs:
           JSON_PATCHER: "./src/modules/pwa-tools/scripts/json_cfg_patcher.mjs"
           TSCONF_PATCH: '{"compilerOptions":{"target":"es2015","strict":false}}'
           MANIFEST_PATCH: '{"short_name":"Forknite","name":"Forknite PWA Demo", "display": "fullscreen", "description":"Fortnite clone PWA version","start_url":"/ForkniteDemo", "orientation": "landscape" }'
-          PACKAGE_PATCH: '{"scripts":{"setup":"cd src/modules && node gen_git_commands.mjs modules_index | sed \"s/GIT/\$GIT/g\" | sh"}}'
+          PACKAGE_PATCH: '{"scripts":{"setup":"cd src/modules && node gen_git_commands.mjs modules_index | sh"}}'
           VIEWPORT_LINE: '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />'
           TITLE_LINE: '<title>Forknite PWA</title>'
           HTML_PATCH_FILE: 'src/modules/pwa-tools/patches/gh-pages_spa-fix.patch'
           #HTML_PATCH_CONTENT: $(cat $HTML_PATCH_FILE)
-        run: |
+        run: |``
           node --experimental-json-modules $JSON_PATCHER ./tsconfig.json "${TSCONF_PATCH}" > temp.json
           mv temp.json tsconfig.json
           node --experimental-json-modules $JSON_PATCHER ./public/manifest.json "${MANIFEST_PATCH}" > temp.json
@@ -131,7 +131,8 @@ jobs:
     - name: Download packages deps and checkout modules
       run: |
         yarn
-        yarn setup
+        cd src/modules
+        node gen_git_commands.mjs | sed 's/GIT/\$GIT/g' | sh 
         cd src/modules/three-experiments/ && git checkout voxels
 
     - name: Build web app (include build information)
