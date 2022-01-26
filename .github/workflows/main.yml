@@ -99,7 +99,7 @@ jobs:
           sed -i "/\/head/i${HTML_PATCH_CONTENT}" public/index.html
           cp src/modules/pwa-tools/patches/404.html public/
       - name: Link public assets
-        run: ln -s $GITHUB_WORKSPACE/src/modules/three-resources/assets public/ && ls -la public/assets/
+        run: cd public/ && ln -s ../src/modules/three-resources/assets ./assets && ls -la assets/
       - name: Build web app
         run: CI=false PUBLIC_URL=/forknite yarn build
       - name: Post build
@@ -134,6 +134,9 @@ jobs:
         yarn setup-finish
         cd src/modules
         cd ./three-experiments/ && git checkout voxels
+
+    - name: Include public assets
+      run: cd public/ && ln -s ../src/modules/three-resources/assets ./assets && ls -la assets/
 
     - name: Build web app (include build information)
       env: 
