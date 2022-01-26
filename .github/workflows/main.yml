@@ -84,7 +84,7 @@ jobs:
           TITLE_LINE: '<title>Forknite PWA</title>'
           HTML_PATCH_FILE: 'src/modules/pwa-tools/patches/gh-pages_spa-fix.patch'
           #HTML_PATCH_CONTENT: $(cat $HTML_PATCH_FILE)
-        run: |``
+        run: |
           node --experimental-json-modules $JSON_PATCHER ./tsconfig.json "${TSCONF_PATCH}" > temp.json
           mv temp.json tsconfig.json
           node --experimental-json-modules $JSON_PATCHER ./public/manifest.json "${MANIFEST_PATCH}" > temp.json
