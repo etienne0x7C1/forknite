@@ -10,7 +10,7 @@ import {
   RobotExpressiveModel,
 } from "../../three-resources/catalogs/Models";
 import { HighlightTriangle } from "../../three-core-modules/helpers/HighlightTriangle";
-import { Player } from "../../three-core-modules/misc/Player";
+import { CONSTRAINT_MODES, Player } from "../../three-core-modules/misc/Player";
 import Mousetrap from "mousetrap";
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { OrbitalCamera } from "../../three-core-modules/misc/Controls";
@@ -80,19 +80,11 @@ export class ForkniteDemo extends ThreeDemoApp {
     Mousetrap.bind("d", (e) => (this.controls.joyLeft.x = 1), "keydown");
     Mousetrap.bind("d", (e) => (this.controls.joyLeft.x = 0), "keyup");
 
-    Mousetrap.bind(
-      "t",
-      () =>
-        (Player.current as Player).triggerDragging(
-          this.highlightTriangle.center
-        ),
-      "keypress"
-    );
-    Mousetrap.bind(
-      "t",
-      () => (Player.current as Player).releaseConstraints(),
-      "keyup"
-    );
+    Mousetrap.bind("t", () => Player.current.triggerDragging(this.highlightTriangle.center), "keypress");
+    Mousetrap.bind("t", () => Player.current.releaseConstraints(), "keyup");
+
+    Mousetrap.bind("space", (e) =>  this.controls.jump = 1, "keydown");
+
 
     // merge with predefined base class controls
     // this.controls = { ...this.controls, ...demoControls };
@@ -203,14 +195,17 @@ export class ForkniteDemo extends ThreeDemoApp {
     this.scene.add(ambient);
   }
 
-  processTouchInputs = ()=>{
+  processTouchInputs = () => {
     if (this.controls.jump) {
       this.controls.jump = false
       Player.current.jump()
     }
 
     if (this.controls.fire) {
-      Player.current.jump()
+      // Player.current.fire()
+      Player.current.triggerDragging(this.highlightTriangle.center)
+    } else if (Player?.current?.constraintMode === CONSTRAINT_MODES.DRAGGING) {
+      Player.current.releaseConstraints()
     }
   }
 
