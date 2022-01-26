@@ -132,7 +132,7 @@ jobs:
       run: |
         yarn
         cd src/modules
-        node gen_git_commands.mjs | sed 's/GIT/\$GIT/g' | sh 
+        node gen_git_commands.mjs modules_index | sed 's/GIT/\$GIT/g' | sh 
         cd src/modules/three-experiments/ && git checkout voxels
 
     - name: Build web app (include build information)
