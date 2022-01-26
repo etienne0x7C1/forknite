@@ -57,7 +57,7 @@ jobs:
           # clone foreign modules
           echo "GITLAB_USR:GITLAB_PWD@gitlab.com/three-modules/three-core-modules.git" >> $MODULES_INDEX_FILE
           echo "gitlab.com/three-modules/three-resources.git" >> $MODULES_INDEX_FILE
-          echo "gitlab.com/three-modules/three-experiments.git" >> $MODULES_INDEX_FILE
+          # echo "gitlab.com/three-modules/three-experiments.git" >> $MODULES_INDEX_FILE
           cd src/modules/
           echo $GITHUB_WORKSPACE/$SCRIPTS_DIR
           node $GITHUB_WORKSPACE/$SCRIPTS_DIR/gen_git_commands.mjs $GITHUB_WORKSPACE/$MODULES_INDEX_FILE | sed 's/GIT/\$GIT/g' | sh 
@@ -133,8 +133,6 @@ jobs:
       run: |
         yarn
         yarn setup-finish
-        cd src/modules
-        cd ./three-experiments/ && git checkout voxels
 
     - name: Include public assets
       run: cd public/ && ln -s ../src/modules/three-resources/assets ./assets && ls -la assets/

@@ -14,7 +14,7 @@ import { Player } from "../../three-core-modules/misc/Player";
 import Mousetrap from "mousetrap";
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { OrbitalCamera } from "../../three-core-modules/misc/Controls";
-import { getLevelMeshes, proceduralCavernsSplitted } from "../../three-experiments/Voxels/VoxelsDemos";
+import { getLevelMeshes, proceduralCavernsSplitted } from "./VoxelsDemos";
 
 const PLAYER_MAX_SPEED = 0.5; // m/s
 const PLAYER_ROT_SPEED = 0.025;
@@ -90,7 +90,7 @@ export class ForkniteDemo extends ThreeDemoApp {
     );
     Mousetrap.bind(
       "t",
-      () => (Player.current as Player).releaseDragging(),
+      () => (Player.current as Player).releaseConstraints(),
       "keyup"
     );
 
@@ -203,6 +203,17 @@ export class ForkniteDemo extends ThreeDemoApp {
     this.scene.add(ambient);
   }
 
+  processTouchInputs = ()=>{
+    if (this.controls.jump) {
+      this.controls.jump = false
+      Player.current.jump()
+    }
+
+    if (this.controls.fire) {
+      Player.current.jump()
+    }
+  }
+
   animate = () => {
     requestAnimationFrame(this.animate);
     // call base super class
@@ -227,6 +238,7 @@ export class ForkniteDemo extends ThreeDemoApp {
       // console.log(this.mem.rot);
     }
     // this.controls.joyRight.x = 0
+    this.processTouchInputs()
 
     // update all player instances
     Player.instances.forEach((player) => {
