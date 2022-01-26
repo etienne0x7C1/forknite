@@ -62,7 +62,6 @@ jobs:
           echo $GITHUB_WORKSPACE/$SCRIPTS_DIR
           node $GITHUB_WORKSPACE/$SCRIPTS_DIR/gen_git_commands.mjs $GITHUB_WORKSPACE/$MODULES_INDEX_FILE | sed 's/GIT/\$GIT/g' | sh 
           pwd && ls -la
-          cd ./three-experiments/ && git checkout voxels
       - name: Complete modules index and Generate gitmodules config file + finishSetup script
         run: |
           # add remaining modules to the index
