@@ -40,6 +40,7 @@ jobs:
           yarn add react-router-dom three @types/three cannon-es 
           yarn add sparse-octree @timohausmann/quadtree-js proj4 
           yarn add mousetrap @types/mousetrap
+          yarn add @fortawesome/fontawesome-svg-core@next @fortawesome/free-solid-svg-icons@next @fortawesome/free-regular-svg-icons@next @fortawesome/react-fontawesome@latest
       - uses: actions/checkout@v2
         with:
           path: "src/modules/forknite"

@@ -223,8 +223,8 @@ export class ForkniteDemo extends ThreeDemoApp {
       this.controls.joyRight.x = 0;
       this.controls.joyRight.y = 0;
       this.controls.joyRight.needReset = false;
-      console.log("memorized rot:");
-      console.log(this.mem.rot);
+      // console.log("memorized rot:");
+      // console.log(this.mem.rot);
     }
     // this.controls.joyRight.x = 0
 
