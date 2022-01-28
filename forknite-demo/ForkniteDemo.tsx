@@ -80,7 +80,7 @@ export class ForkniteDemo extends ThreeDemoApp {
     Mousetrap.bind("d", (e) => (this.controls.joyLeft.x = 1), "keydown");
     Mousetrap.bind("d", (e) => (this.controls.joyLeft.x = 0), "keyup");
 
-    Mousetrap.bind("t", () => Player.current.triggerDragging(this.highlightTriangle.center), "keypress");
+    Mousetrap.bind("t", () => Player.current.trigElastic(this.highlightTriangle.center), "keypress");
     Mousetrap.bind("t", () => Player.current.releaseConstraints(), "keyup");
 
     Mousetrap.bind("space", (e) =>  this.controls.jump = 1, "keydown");
@@ -107,7 +107,7 @@ export class ForkniteDemo extends ThreeDemoApp {
   populate() {
     const modelClass = RobotExpressiveModel;
     ModelsFactory.create(modelClass).then((model) => {
-      this.player = new Player(modelClass);
+      this.player = new Player(modelClass, this);
       this.player.initBody();
       this.player.initConstraints();
       this.scene.add(this.player);
@@ -203,7 +203,7 @@ export class ForkniteDemo extends ThreeDemoApp {
 
     if (this.controls.fire) {
       // Player.current.fire()
-      Player.current.triggerDragging(this.highlightTriangle.center)
+      Player.current.trigElastic(this.highlightTriangle.center)
     } else if (Player?.current?.constraintMode === CONSTRAINT_MODES.DRAGGING) {
       Player.current.releaseConstraints()
     }
