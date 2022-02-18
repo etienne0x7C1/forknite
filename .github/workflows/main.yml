@@ -63,7 +63,7 @@ jobs:
           echo "gitlab.com/three-modules/three-resources.git" >> $MODULES_INDEX_FILE
           cd src/modules/
           echo $GITHUB_WORKSPACE/$SCRIPTS_DIR
-          node $GITHUB_WORKSPACE/$SCRIPTS_DIR/gen_git_commands.mjs $GITHUB_WORKSPACE/$MODULES_INDEX_FILE | sed 's/GIT/\$GIT/g' | sh 
+          node $GITHUB_WORKSPACE/$SCRIPTS_DIR/gen_git_commands.mjs $GITHUB_WORKSPACE/$MODULES_INDEX_FILE | sh 
           # complete modules index with current repo
           echo "github.com/etienne1911/${MODULE_NAME}.git" >> $GITHUB_WORKSPACE/$MODULES_INDEX_FILE
           pwd && ls -la
