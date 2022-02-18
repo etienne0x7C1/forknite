@@ -16,7 +16,7 @@ tasks:
       mv forknite/ src/modules/
       yarn
       cd src/modules/
-      node /workspace/$SCRIPTS_DIR/gen_git_commands.mjs modules_index | sh 
+      CI=true node /workspace/$SCRIPTS_DIR/gen_git_commands.mjs modules_index | sh 
       cd /workspace
       ln -s /workspace/$PROJECT_ARTIFACT_NAME/src/modules/three-resources/assets/ public/
     command: |
