@@ -40,7 +40,9 @@ jobs:
           echo 'workspace artifact retrieved'
           unzip ${PWA_ARTIFACT_NAME}.zip
           echo 'done extracting workspace artifact'
-          pwd && ls -la
+          pwd && ls -la && rm ${PWA_ARTIFACT_NAME}.zip
+          # backup modules folder for later
+          cp -r src/modules/ backup/ 
       - name: install deps & additional packages
         run: |
           yarn
@@ -56,8 +58,6 @@ jobs:
           GITLAB_USR: ${{ secrets.GITLAB_USER }}
           GITLAB_PWD: ${{ secrets.GITLAB_TOKEN }}
         run: |
-          # backup modules folder for later
-          cp -r src/modules/ backup/ 
           # add any foreigh modules below
           echo "GITLAB_USR:GITLAB_PWD@gitlab.com/three-modules/three-core-modules.git" >> $MODULES_INDEX_FILE
           echo "gitlab.com/three-modules/three-resources.git" >> $MODULES_INDEX_FILE
