@@ -3,48 +3,22 @@ workspaceLocation: "."
 tasks:
   - name: Workspace Setup
     env:  
-      PROJECT_DIR: /workspace/forknite-pwa
-      JSONPATCHER: ./src/modules/pwa-tools/scripts/json_cfg_patcher.mjs
-      TSCONF: '{"compilerOptions":{"target":"es2015","strict":false}}'
-      MANIFEST_PATCH: '{"short_name":"Forknite","name":"Forknite PWA Demo","description":"Fortnite clone PWA version","start_url":"forknite/"}'
-      APP_PATH_SUBS: 's/.\/App/.\/modules\/forknite\//'
-      VIEWPORT_LINE_REPLACE: '<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />'
-      TITLE_LINE_REPLACE: '<title>Forknite PWA</title>'
-      PATCH_FILE: src/modules/pwa-tools/patches/gh-pages_spa-fix.patch
+      PROJECT_ARTIFACT_URL: 'https://github.com/etienne1911/forknite/releases/download'
+      PROJECT_ARTIFACT_REL: 'r1'
+      PROJECT_ARTIFACT_NAME: 'forknite-workspace-artifact'
     init: |
-      echo $PROJECT_DIR
-      yarn create react-app $PROJECT_DIR --template cra-template-pwa-typescript
-      cd $PROJECT_DIR/src/
-      mkdir modules && cd modules/
-      mv /workspace/forknite/ ./
-      touch modules_checkout
-      echo "git clone https://github.com/etienne1911/forknite.git" >> modules_checkout
-      echo "git clone https://github.com/etienne1911/pwa-tools.git" >> modules_checkout
-      echo "git clone https://gitlab.com/three-modules/three-core-modules.git" >> modules_checkout
-      echo "git clone https://gitlab.com/three-modules/three-resources.git" >> modules_checkout
-      echo "git clone https://gitlab.com/three-modules/three-experiments.git" >> modules_checkout
-      sh modules_checkout
-      node --experimental-json-modules ./pwa-tools/scripts/create_submodules.mjs ./modules_checkout >> ../../.gitmodules
-      rm modules_checkout
-      cd $PROJECT_DIR/src/modules/three-experiments/ && git checkout voxels
-      cd $PROJECT_DIR/
-      ln -s $PROJECT_DIR/src/modules/three-resources/assets/ public/
-      yarn add react-router-dom react-router-dom three @types/three cannon-es &&
-      yarn add sparse-octree @timohausmann/quadtree-js proj4 &&
-      yarn add mousetrap @types/mousetrap 
-      node --experimental-json-modules $JSONPATCHER ./tsconfig.json "${TSCONF}" > temp.json
-      mv temp.json tsconfig.json
-      node --experimental-json-modules $JSONPATCHER ./public/manifest.json "${MANIFEST_PATCH}" > temp.json
-      mv temp.json ./public/manifest.json
-      sed -i $APP_PATH_SUBS src/index.tsx
-      sed -i "/viewport/c${VIEWPORT_LINE_REPLACE}" public/index.html
-      sed -i "/\/title/c${TITLE_LINE_REPLACE}" public/index.html
-      echo ${PROJECT_DIR}/${PATCH_FILE}
-      export PATCH_CONTENT=$(cat ${PROJECT_DIR}/${PATCH_FILE}) && echo $PATCH_CONTENT
-      sed -i "/\/head/i${PATCH_CONTENT}" public/index.html
-      cp src/modules/pwa-tools/patches/404.html public/
+      wget $PROJECT_ARTIFACT_URL/$PROJECT_ARTIFACT_REL/$PROJECT_ARTIFACT_NAME.zip
+      echo 'workspace artifact retrieved'
+      unzip ${PROJECT_ARTIFACT_NAME}.zip
+      echo 'done extracting workspace artifact'
+      pwd && ls -la
+      cd /workspace/$PROJECT_ARTIFACT_NAME/
+      yarn
+      # cd /workspace/$PROJECT_ARTIFACT_NAME/src/modules/three-experiments/ && git checkout voxels
+      mv /worspace/forknite /workspace/$PROJECT_ARTIFACT_NAME/src/modules/
+      ln -s /workspace/$PROJECT_ARTIFACT_NAME/src/modules/three-resources/assets/ public/
     command: |
-      cd /workspace/forknite-pwa
+      cd /workspace/PROJECT_ARTIFACT_NAME
       yarn run start
 ports:
   - port: 3000
