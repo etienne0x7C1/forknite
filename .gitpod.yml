@@ -6,19 +6,21 @@ tasks:
       PROJECT_ARTIFACT_URL: 'https://github.com/etienne1911/forknite/releases/download'
       PROJECT_ARTIFACT_REL: 'r1'
       PROJECT_ARTIFACT_NAME: 'forknite-workspace-artifact'
+      SCRIPTS_DIR: src/modules/pwa-tools/scripts/
     init: |
       wget $PROJECT_ARTIFACT_URL/$PROJECT_ARTIFACT_REL/$PROJECT_ARTIFACT_NAME.zip
       echo 'workspace artifact retrieved'
       unzip ${PROJECT_ARTIFACT_NAME}.zip
       echo 'done extracting workspace artifact'
+      mv forknite/ src/modules/
       pwd && ls -la
-      cd /workspace/$PROJECT_ARTIFACT_NAME/
       yarn
-      # cd /workspace/$PROJECT_ARTIFACT_NAME/src/modules/three-experiments/ && git checkout voxels
-      mv /worspace/forknite /workspace/$PROJECT_ARTIFACT_NAME/src/modules/
+      cd src/modules/
+      node /workspace/$SCRIPTS_DIR/gen_git_commands.mjs $GITHUB_WORKSPACE/$MODULES_INDEX_FILE | sh 
+      cd /workspace
       ln -s /workspace/$PROJECT_ARTIFACT_NAME/src/modules/three-resources/assets/ public/
     command: |
-      cd /workspace/PROJECT_ARTIFACT_NAME
+      cd /workspace
       yarn run start
 ports:
   - port: 3000
