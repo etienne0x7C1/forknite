@@ -12,11 +12,11 @@ tasks:
       echo 'workspace artifact retrieved'
       unzip ${PROJECT_ARTIFACT_NAME}.zip
       echo 'done extracting workspace artifact'
-      mv forknite/ src/modules/
       pwd && ls -la
+      mv forknite/ src/modules/
       yarn
       cd src/modules/
-      node /workspace/$SCRIPTS_DIR/gen_git_commands.mjs $GITHUB_WORKSPACE/$MODULES_INDEX_FILE | sh 
+      node /workspace/$SCRIPTS_DIR/gen_git_commands.mjs modules_index | sh 
       cd /workspace
       ln -s /workspace/$PROJECT_ARTIFACT_NAME/src/modules/three-resources/assets/ public/
     command: |
